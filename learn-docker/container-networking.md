@@ -1,3 +1,8 @@
+---
+layout: default
+title: Container Networking
+---
+
 # Container Networking
 
 In a real project, your containers don't just sit alone—they need to talk to each other. For example, your API container needs to connect to your database container.

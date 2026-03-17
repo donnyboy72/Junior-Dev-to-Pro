@@ -1,3 +1,8 @@
+---
+layout: default
+title: Common Debugging Tools
+---
+
 # Common Debugging Tools
 
 Debugging is a lot easier when you have the right tools. Here is a list of the most common debugging tools used by professional developers every day.

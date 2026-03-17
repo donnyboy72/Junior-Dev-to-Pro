@@ -1,3 +1,8 @@
+---
+layout: default
+title: Common Architecture Mistakes
+---
+
 # Common Architecture Mistakes
 
 As a junior developer, it's easy to focus on the details and miss the "big picture." This lesson covers the most common architectural mistakes and how to avoid them.

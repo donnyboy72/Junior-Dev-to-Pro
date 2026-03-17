@@ -1,3 +1,8 @@
+---
+layout: default
+title: Understanding Error Messages
+---
+
 # Understanding Error Messages
 
 The first thing a beginner does when they see an error message is panic and close the terminal. But an error message is not a failure—it's a **clue**.

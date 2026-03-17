@@ -1,3 +1,8 @@
+---
+layout: default
+title: Layers and Separation of Concerns
+---
+
 # Layers and Separation of Concerns
 
 One of the most powerful concepts in software architecture is **Separation of Concerns**. This simply means that different parts of your system should have different, well-defined jobs.

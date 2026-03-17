@@ -1,3 +1,8 @@
+---
+layout: default
+title: Code Review Principles
+---
+
 # Code Review Principles
 
 A **Code Review** is the process where one developer looks at another developer's code before it is merged into the project. It's the ultimate "Quality Check."

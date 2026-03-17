@@ -1,3 +1,8 @@
+---
+layout: default
+title: API-Driven Architecture
+---
+
 # API-Driven Architecture
 
 In modern software, systems rarely act alone. They talk to other systems using **APIs (Application Programming Interfaces)**.

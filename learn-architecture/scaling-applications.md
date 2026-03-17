@@ -1,3 +1,8 @@
+---
+layout: default
+title: Scaling Applications
+---
+
 # Scaling Applications
 
 Scaling is the process of increasing a system's capacity to handle more users, more data, and more traffic. As a developer, you'll often hear about two main ways to scale: **Vertical Scaling** and **Horizontal Scaling**.

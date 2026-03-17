@@ -1,3 +1,8 @@
+---
+layout: default
+title: Docker Security Basics
+---
+
 # Docker Security Basics
 
 Docker provides built-in security features, but it's still your responsibility to follow best practices to keep your application and server safe.

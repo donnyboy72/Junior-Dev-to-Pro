@@ -1,3 +1,8 @@
+---
+layout: default
+title: Resolving Conflicts
+---
+
 # Resolving Conflicts
 
 A **Merge Conflict** happens when Git cannot automatically determine which changes to keep. This usually occurs when two people (or two branches) modify the **exact same line** of the same file.

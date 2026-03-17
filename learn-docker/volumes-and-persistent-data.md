@@ -1,3 +1,8 @@
+---
+layout: default
+title: Volumes and Persistent Data
+---
+
 # Volumes and Persistent Data
 
 Docker containers are designed to be "disposable." When you stop and remove a container, everything inside its file system is deleted forever.

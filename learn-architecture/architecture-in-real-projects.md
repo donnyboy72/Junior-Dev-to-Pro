@@ -1,3 +1,8 @@
+---
+layout: default
+title: Architecture in Real Projects
+---
+
 # Architecture in Real Projects
 
 In this final lesson, we'll see how all the concepts we've learned—APIs, databases, caches, load balancers, and more—fit together into a "Real-World Architecture."

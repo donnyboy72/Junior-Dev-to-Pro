@@ -1,3 +1,8 @@
+---
+layout: default
+title: Useful Git Commands Reference
+---
+
 # Useful Git Commands Reference
 
 This page serves as a quick-reference "cheat sheet" for Git commands you'll use frequently as a developer.

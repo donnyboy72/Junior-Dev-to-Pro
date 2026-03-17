@@ -1,3 +1,8 @@
+---
+layout: default
+title: Writing Readable Functions
+---
+
 # Writing Readable Functions
 
 Functions are the building blocks of your code. If your functions are small and focused, your entire application will be much easier to understand, test, and maintain.

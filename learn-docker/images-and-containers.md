@@ -1,3 +1,8 @@
+---
+layout: default
+title: Images and Containers
+---
+
 # Images and Containers
 
 Understanding the difference between an **Image** and a **Container** is fundamental to using Docker.

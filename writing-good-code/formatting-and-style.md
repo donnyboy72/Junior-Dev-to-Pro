@@ -1,3 +1,8 @@
+---
+layout: default
+title: Formatting and Style
+---
+
 # Formatting and Style
 
 Formatting isn't just about making code "pretty." It's about reducing the cognitive load required to read your code. Consistent formatting helps you (and your teammates) skim through code and find information quickly.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Testing and Code Quality
+---
+
 # Testing and Code Quality
 
 Testing is the only way to be **sure** that your code works. It's the "Proof of Correctness" in software development. As a junior developer, learning to write tests is the fastest way to gain the trust of your senior colleagues.

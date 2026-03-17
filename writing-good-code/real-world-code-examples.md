@@ -1,3 +1,8 @@
+---
+layout: default
+title: Real-World Code Examples
+---
+
 # Real-World Code Examples
 
 In this lesson, we'll see how messy code evolves into clean, professional code through refactoring. We'll use a "Shopping Cart" feature as our example.

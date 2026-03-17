@@ -1,3 +1,8 @@
+---
+layout: default
+title: Docker Compose
+---
+
 # Docker Compose
 
 In a real project, your application usually needs more than just one container. You might need an API server, a database, and a cache.

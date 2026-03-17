@@ -1,3 +1,8 @@
+---
+layout: default
+title: Caching Basics
+---
+
 # Caching Basics
 
 In software architecture, **caching** is the secret to making slow applications fast. It's the practice of storing a copy of data in a high-speed storage layer (like RAM) so that future requests for that data can be served faster.

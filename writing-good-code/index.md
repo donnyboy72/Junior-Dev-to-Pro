@@ -1,3 +1,8 @@
+---
+layout: default
+title: Writing Good Code
+---
+
 # Writing Good Code
 
 Writing code is easy. Writing code that **other people can understand and maintain** is hard.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging Logic Errors
+---
+
 # Debugging Logic Errors
 
 Logic errors are the most frustrating bugs. The code runs without crashing, but it produces the **wrong result**.

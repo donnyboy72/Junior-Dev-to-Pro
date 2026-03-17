@@ -1,3 +1,8 @@
+---
+layout: default
+title: What is Clean Code?
+---
+
 # What is Clean Code?
 
 Clean code is code that is easy for a human to read and understand. It's code that looks like it was written by someone who cares about their work.

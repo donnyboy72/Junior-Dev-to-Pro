@@ -1,3 +1,8 @@
+---
+layout: default
+title: Fixing Common Mistakes
+---
+
 # Fixing Common Mistakes
 
 Everyone makes mistakes in Git. The good news is that Git is specifically designed to help you undo them.

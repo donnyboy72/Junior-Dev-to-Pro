@@ -1,3 +1,8 @@
+---
+layout: default
+title: Learn Debugging
+---
+
 # Learn Debugging
 
 Debugging is the art of finding and fixing "bugs" in your code. It is one of the most important skills a developer can have. In fact, many professional developers spend more time debugging code than they do writing new code.

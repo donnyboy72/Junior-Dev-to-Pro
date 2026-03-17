@@ -1,3 +1,8 @@
+---
+layout: default
+title: Code Organization
+---
+
 # Code Organization
 
 A well-organized project is easy to navigate. If you have 100 files in one folder, you'll never find anything. Professional developers organize code into logical layers and modules.

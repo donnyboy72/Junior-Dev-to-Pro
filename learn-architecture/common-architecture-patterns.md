@@ -1,3 +1,8 @@
+---
+layout: default
+title: Common Architecture Patterns
+---
+
 # Common Architecture Patterns
 
 Architecture patterns are "standard blueprints" for building software. Rather than inventing a new design for every project, developers use these proven structures to solve common problems.

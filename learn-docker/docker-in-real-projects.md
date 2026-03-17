@@ -1,3 +1,8 @@
+---
+layout: default
+title: Docker in Real Projects
+---
+
 # Docker in Real Projects
 
 In the professional world, most applications are not single-container systems. They often consist of multiple services like a frontend, backend, and a database.

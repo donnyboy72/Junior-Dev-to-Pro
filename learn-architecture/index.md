@@ -1,3 +1,8 @@
+---
+layout: default
+title: Learn Software Architecture
+---
+
 # Learn Software Architecture
 
 Software architecture is the foundation upon which applications are built. It describes the structural design of a system, how its components interact, and the principles that guide its growth and evolution.

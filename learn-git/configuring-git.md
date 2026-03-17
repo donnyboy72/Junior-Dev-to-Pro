@@ -1,3 +1,8 @@
+---
+layout: default
+title: Configuring Git
+---
+
 # Configuring Git
 
 After installing Git, the next step is configuring it.

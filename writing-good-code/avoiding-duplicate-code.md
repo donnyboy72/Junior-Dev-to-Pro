@@ -1,3 +1,8 @@
+---
+layout: default
+title: Avoiding Duplicate Code (DRY)
+---
+
 # Avoiding Duplicate Code (DRY)
 
 The **DRY Principle** (Don't Repeat Yourself) is one of the most important concepts in software development. Every piece of knowledge in a system should have a single, unambiguous representation.

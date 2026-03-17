@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging Containers
+---
+
 # Debugging Containers
 
 Debugging in Docker can feel like you're looking into a "black box." But with the right tools, you can find and fix problems just like you would on your local machine.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Building Images
+---
+
 # Building Images
 
 Once you've written your Dockerfile, you need to "build" it to create the final image. This is the process that actually executes the instructions in the Dockerfile and creates the image.

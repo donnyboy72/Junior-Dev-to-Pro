@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging Performance Issues
+---
+
 # Debugging Performance Issues
 
 Performance issues are bugs that make your app "slow" or "hang." They are often harder to find than a crash because the code is "running," just not efficiently.

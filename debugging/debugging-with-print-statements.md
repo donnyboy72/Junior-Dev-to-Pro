@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging with Print Statements
+---
+
 # Debugging with Print Statements
 
 "Print debugging" is the most common way developers find bugs. It's the process of inserting commands into your code to output information to the console while the program is running.

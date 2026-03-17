@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging Databases
+---
+
 # Debugging Databases
 
 Databases are where your application's data is stored. If you're getting wrong data, missing data, or slow responses, the problem might be in the database.

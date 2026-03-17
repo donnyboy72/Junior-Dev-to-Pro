@@ -1,3 +1,8 @@
+---
+layout: default
+title: Writing Maintainable Code
+---
+
 # Writing Maintainable Code
 
 Maintainable code is code that is easy to **change.** Software is never "finished"—it's always growing and evolving. If your code is hard to change, your project will eventually die.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Systematic Debugging Process
+---
+
 # Systematic Debugging Process
 
 The secret to being a great debugger isn't having a high IQ—it's having a **systematic process**. When you have a plan, you don't get overwhelmed by a "mountain" of code.

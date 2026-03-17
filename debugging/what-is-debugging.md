@@ -1,3 +1,8 @@
+---
+layout: default
+title: What is Debugging?
+---
+
 # What is Debugging?
 
 Debugging is the process of finding and resolving "bugs"—errors or defects in a computer program that prevent it from working as intended.

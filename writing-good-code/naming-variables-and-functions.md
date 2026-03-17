@@ -1,3 +1,8 @@
+---
+layout: default
+title: Naming Variables and Functions
+---
+
 # Naming Variables and Functions
 
 The names you choose for your variables and functions are the most important part of your code's documentation. Good names explain *what* a value is or *what* a function does without needing a comment.

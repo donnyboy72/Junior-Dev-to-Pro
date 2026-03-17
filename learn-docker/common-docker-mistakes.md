@@ -1,3 +1,8 @@
+---
+layout: default
+title: Common Docker Mistakes
+---
+
 # Common Docker Mistakes
 
 Learning Docker is like learning a new language. You'll make mistakes, and that's okay! Here are the most common ones junior developers make—and how to avoid them.

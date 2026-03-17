@@ -1,3 +1,8 @@
+---
+layout: default
+title: Load Balancers
+---
+
 # Load Balancers
 
 When a website becomes popular, a single server can't handle all the traffic. It's like a restaurant with only one waiter—no matter how fast the waiter is, they'll eventually get overwhelmed.

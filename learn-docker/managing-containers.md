@@ -1,3 +1,8 @@
+---
+layout: default
+title: Managing Containers
+---
+
 # Managing Containers
 
 Once you've started your first container, you need to know how to interact with it, check its status, and properly shut it down.

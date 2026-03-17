@@ -1,3 +1,8 @@
+---
+layout: default
+title: Common Debugging Mistakes
+---
+
 # Common Debugging Mistakes
 
 Debugging is a skill that takes time to master. Every junior developer (and many senior developers!) makes these mistakes at some point.

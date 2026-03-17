@@ -1,3 +1,8 @@
+---
+layout: default
+title: Installing Docker
+---
+
 # Installing Docker
 
 Docker is a powerful tool, but before you can start containerizing your applications, you need to get it running on your local machine.

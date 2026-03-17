@@ -1,3 +1,8 @@
+---
+layout: default
+title: Installing Git
+---
+
 # Installing Git
 
 Git must be installed on your computer before you can use it.

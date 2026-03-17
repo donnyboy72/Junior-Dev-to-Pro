@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging APIs
+---
+
 # Debugging APIs
 
 APIs (Application Programming Interfaces) are the glue that holds modern systems together. But they are also a common source of bugs. Is the error in the frontend (the caller) or the backend (the server)?

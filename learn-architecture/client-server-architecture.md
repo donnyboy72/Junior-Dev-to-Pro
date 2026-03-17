@@ -1,3 +1,8 @@
+---
+layout: default
+title: Client-Server Architecture
+---
+
 # Client-Server Architecture
 
 Client-server architecture is the foundational model of the internet. It describes how two or more computers talk to each other to accomplish a task.

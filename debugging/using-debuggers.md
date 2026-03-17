@@ -1,3 +1,8 @@
+---
+layout: default
+title: Using Debuggers
+---
+
 # Using Debuggers
 
 A debugger is a special tool built into your IDE (like VS Code or IntelliJ) that allows you to **pause your program** while it's running. This gives you a "snapshot" of your code at a specific moment in time.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Comments and Documentation
+---
+
 # Comments and Documentation
 
 The best code is **self-documenting.** This means the names of your variables and functions are so clear that you don't *need* a comment to explain what they do.

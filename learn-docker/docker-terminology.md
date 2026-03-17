@@ -1,3 +1,8 @@
+---
+layout: default
+title: Docker Terminology
+---
+
 # Docker Terminology
 
 To learn Docker effectively, you first need to understand its unique language. The names and concepts can be confusing at first, but they all fit together in a logical way.

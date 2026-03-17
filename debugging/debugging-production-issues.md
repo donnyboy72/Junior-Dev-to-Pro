@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging Production Issues
+---
+
 # Debugging Production Issues
 
 "Production" is the live environment where real users interact with your app. Debugging in production is the most stressful part of a developer's job because **the stakes are high.**

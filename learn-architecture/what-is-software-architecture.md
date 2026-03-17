@@ -1,3 +1,8 @@
+---
+layout: default
+title: What is Software Architecture?
+---
+
 # What is Software Architecture?
 
 Software architecture is the high-level structure of a software system. Think of it like the blueprint for a house. While "code" is the bricks and mortar, the "architecture" determines how many floors the house will have, where the load-bearing walls are, and how the plumbing and electricity are routed.

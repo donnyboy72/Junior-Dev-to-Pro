@@ -1,3 +1,8 @@
+---
+layout: default
+title: Reading Stack Traces
+---
+
 # Reading Stack Traces
 
 A **Stack Trace** (or "Call Stack") is a report that shows the sequence of function calls that were active at the time your program crashed.

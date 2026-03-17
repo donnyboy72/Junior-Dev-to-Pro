@@ -1,3 +1,8 @@
+---
+layout: default
+title: Basic Git Workflow
+---
+
 # Basic Git Workflow
 
 Now that Git is installed and configured, you are ready to start using it to track changes in a project.

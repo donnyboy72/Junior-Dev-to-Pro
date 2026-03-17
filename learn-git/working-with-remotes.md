@@ -1,3 +1,8 @@
+---
+layout: default
+title: Working with Remotes
+---
+
 # Working with Remotes
 
 So far, you have been working with Git entirely on your own computer. In a professional environment, you need to share your code with others and back it up online. This is where **remotes** come in.

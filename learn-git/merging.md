@@ -1,3 +1,8 @@
+---
+layout: default
+title: Merging
+---
+
 # Merging
 
 Once you have finished working on a feature in its own branch, you need to bring those changes back into the main project. In Git, this process is called **merging**.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Running Your First Container
+---
+
 # Running Your First Container
 
 Now that you understand images and containers, it's time to run one!

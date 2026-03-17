@@ -1,3 +1,8 @@
+---
+layout: default
+title: Message Queues
+---
+
 # Message Queues
 
 In modern software, some tasks take a long time to finish. If a user clicks "Sign Up," you don't want them to wait for the server to send an email, create a profile, and generate a PDF receipt.

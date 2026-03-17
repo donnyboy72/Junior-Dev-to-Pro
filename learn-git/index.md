@@ -1,3 +1,8 @@
+---
+layout: default
+title: Learn Git
+---
+
 # Learn Git
 
 Git is one of the most important tools used in professional software development. It allows developers to track changes to code, collaborate with others, and safely experiment without losing work.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Learn Docker
+---
+
 # Learn Docker
 
 Docker is one of the most important tools used in modern software development.

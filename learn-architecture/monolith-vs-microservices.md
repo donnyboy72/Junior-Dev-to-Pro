@@ -1,3 +1,8 @@
+---
+layout: default
+title: Monolith vs. Microservices
+---
+
 # Monolith vs. Microservices
 
 One of the most common debates in software architecture is choosing between a **Monolith** and **Microservices**. This decision has a huge impact on how you build, deploy, and scale your application.

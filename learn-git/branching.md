@@ -1,3 +1,8 @@
+---
+layout: default
+title: Branching
+---
+
 # Branching
 
 Branching is one of Git's most powerful features. It allows you to step away from the "main" line of work and try something new without breaking anything.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Common Clean Code Mistakes
+---
+
 # Common Clean Code Mistakes
 
 Even after learning the principles, it's easy to fall back into bad habits. Here are the most common clean code mistakes made by junior developers—and how to avoid them.

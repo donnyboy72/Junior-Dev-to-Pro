@@ -1,3 +1,8 @@
+---
+layout: default
+title: Observability: Logging & Monitoring
+---
+
 # Observability: Logging & Monitoring
 
 If your application is like a car, then **Observability** is the dashboard. Without it, you wouldn't know how fast you're going, if you're running out of gas, or if the engine is overheating until it's too late.

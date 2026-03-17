@@ -1,3 +1,8 @@
+---
+layout: default
+title: Databases in Architecture
+---
+
 # Databases in Architecture
 
 A database is the storage engine of your application. It's where your users' names, orders, and information live permanently.

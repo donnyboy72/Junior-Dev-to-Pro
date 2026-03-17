@@ -1,3 +1,8 @@
+---
+layout: default
+title: What is Docker?
+---
+
 # What is Docker?
 
 Docker is a platform for building, running, and managing applications inside containers.

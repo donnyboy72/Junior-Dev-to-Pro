@@ -1,3 +1,8 @@
+---
+layout: default
+title: Debugging Docker Containers
+---
+
 # Debugging Docker Containers
 
 Docker makes it easy to run applications in isolated environments. But when things go wrong inside a container, it can feel like you're debugging a "black box."

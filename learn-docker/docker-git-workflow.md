@@ -1,3 +1,8 @@
+---
+layout: default
+title: Docker + Git Workflow
+---
+
 # Docker + Git Workflow
 
 At professional software companies, Git and Docker are used together to build, test, and deploy applications.

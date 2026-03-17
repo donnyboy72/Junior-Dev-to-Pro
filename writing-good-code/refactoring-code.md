@@ -1,3 +1,8 @@
+---
+layout: default
+title: Refactoring Code
+---
+
 # Refactoring Code
 
 Refactoring is the process of improving the **internal structure** of code without changing its **external behavior.**

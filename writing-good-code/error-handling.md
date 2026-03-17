@@ -1,3 +1,8 @@
+---
+layout: default
+title: Error Handling
+---
+
 # Error Handling
 
 In a perfect world, code never fails. In the real world, servers go down, users enter bad data, and APIs return unexpected results. **Good code is prepared for failure.**

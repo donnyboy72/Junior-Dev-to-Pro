@@ -1,3 +1,8 @@
+---
+layout: default
+title: Dockerfile Basics
+---
+
 # Dockerfile Basics
 
 A **Dockerfile** is a text file that contains the "recipe" for building a Docker image. It's how you tell Docker exactly what your application needs to run.
