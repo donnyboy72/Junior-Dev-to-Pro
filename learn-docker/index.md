@@ -60,6 +60,7 @@ If you are new to Docker, follow the lessons in this order:
 14. [Docker in Real Projects](docker-in-real-projects.md)
 15. [Docker + Git Workflow](docker-git-workflow.md)
 16. [Common Docker Mistakes](common-docker-mistakes.md)
+17. [**Interactive Docker Visualizer**](docker-visualizer.md)
 
 ---
 
