@@ -158,7 +158,7 @@ Follow these sections in order if you are new to Git.
 6. [Merging](merging.md)
 7. [Resolving conflicts](resolving-conflicts.md)
 8. [Fixing common mistakes](fixing-mistakes.md)
-9. [**Interactive Visual Git Guide**](git-visualizer.md)
+9. [Interactive Visual Git Guide](git-visualizer.md)
 
 ---
 

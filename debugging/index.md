@@ -47,6 +47,7 @@ Follow these lessons in order to build a solid foundation:
 12. [Debugging Production Issues](debugging-production-issues.md)
 13. [Common Debugging Tools](common-debugging-tools.md)
 14. [Common Debugging Mistakes](common-debugging-mistakes.md)
+15. [**Interactive Debugging Simulator**](debugging-simulator.md)
 
 ---
 
