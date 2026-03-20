@@ -33,6 +33,7 @@ title: Interactive Git Visualizer
 
     .btn-commit { background: var(--accent-color); color: #0f172a; }
     .btn-branch { background: #818cf8; color: #f8fafc; }
+    .btn-checkout { background: #f59e0b; color: #0f172a; }
     .btn-merge { background: #10b981; color: #f8fafc; }
     .btn-reset { background: rgba(255, 255, 255, 0.1); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.2); }
 
@@ -95,6 +96,7 @@ title: Interactive Git Visualizer
     <div class="controls">
         <button class="btn btn-commit" id="btn-commit">git commit</button>
         <button class="btn btn-branch" id="btn-branch">git branch feature</button>
+        <button class="btn btn-checkout" id="btn-checkout" disabled>git checkout [branch]</button>
         <button class="btn btn-merge" id="btn-merge" disabled>git merge feature</button>
         <button class="btn btn-reset" id="btn-reset">Reset</button>
     </div>
@@ -114,6 +116,7 @@ title: Interactive Git Visualizer
     
     const btnCommit = document.getElementById('btn-commit');
     const btnBranch = document.getElementById('btn-branch');
+    const btnCheckout = document.getElementById('btn-checkout');
     const btnMerge = document.getElementById('btn-merge');
     const btnReset = document.getElementById('btn-reset');
 
@@ -145,6 +148,11 @@ title: Interactive Git Visualizer
     }
 
     function addCommit(message, branchName, parent = null) {
+        // If parent is not provided, use the current head of the branch
+        if (!parent) {
+            parent = state.commits.filter(c => c.branch === branchName).pop();
+        }
+
         const x = parent ? parent.x + CONFIG.spacing : CONFIG.startX;
         const y = branchName === 'main' ? CONFIG.mainY : CONFIG.featureY;
         
@@ -201,10 +209,12 @@ title: Interactive Git Visualizer
             circle.setAttribute("fill", commit.branch === 'main' ? '#38bdf8' : '#818cf8');
             circle.classList.add("commit");
             
-            // Highlight current head
-            if (state.head.id === commit.id) {
+            // Highlight current head (the actual HEAD based on current branch)
+            const branchHead = state.commits.filter(c => c.branch === state.currentBranch).pop();
+            if (branchHead && branchHead.id === commit.id) {
                 circle.setAttribute("stroke", "#fff");
                 circle.setAttribute("stroke-width", "3");
+                circle.setAttribute("r", CONFIG.nodeRadius + 2);
             }
 
             g.appendChild(circle);
@@ -217,8 +227,9 @@ title: Interactive Git Visualizer
                 const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 text.setAttribute("x", commit.x);
                 text.setAttribute("y", commit.y + 25);
-                text.setAttribute("fill", "var(--text-secondary)");
+                text.setAttribute("fill", (isMainHead && state.currentBranch === 'main') || (isFeatureHead && state.currentBranch === 'feature') ? "var(--accent-color)" : "var(--text-secondary)");
                 text.setAttribute("font-size", "12");
+                text.setAttribute("font-weight", "bold");
                 text.setAttribute("text-anchor", "middle");
                 text.textContent = isMainHead ? 'main' : 'feature';
                 g.appendChild(text);
@@ -233,17 +244,20 @@ title: Interactive Git Visualizer
         commitCount.textContent = `Commits: ${state.commits.length}`;
         
         btnBranch.disabled = state.featureBranchCreated;
+        btnCheckout.disabled = !state.featureBranchCreated;
         btnMerge.disabled = !state.featureBranchCreated || state.currentBranch !== 'main';
 
-        if (state.currentBranch === 'feature') {
-            btnBranch.textContent = "Currently on 'feature'";
+        if (state.featureBranchCreated) {
+            const target = state.currentBranch === 'main' ? 'feature' : 'main';
+            btnCheckout.textContent = `git checkout ${target}`;
         } else {
-            btnBranch.textContent = "git branch feature";
+            btnCheckout.textContent = "git checkout [branch]";
         }
     }
 
     btnCommit.addEventListener('click', () => {
-        addCommit(`Commit ${state.commits.length}`, state.currentBranch, state.head);
+        const branchHead = state.commits.filter(c => c.branch === state.currentBranch).pop();
+        addCommit(`Commit ${state.commits.length}`, state.currentBranch, branchHead);
         infoTitle.textContent = "New Commit Created";
         infoText.textContent = `A new snapshot was added to the '${state.currentBranch}' branch. In Git, a commit records changes to your files.`;
         updateUI();
@@ -251,16 +265,28 @@ title: Interactive Git Visualizer
 
     btnBranch.addEventListener('click', () => {
         state.featureBranchCreated = true;
+        const mainHead = state.commits.filter(c => c.branch === 'main').pop();
         state.currentBranch = 'feature';
+        addCommit('Start feature', 'feature', mainHead);
         infoTitle.textContent = "Branch 'feature' Created";
-        infoText.textContent = "You've created a new branch! This is like creating a parallel universe where you can experiment without breaking the 'main' code.";
+        infoText.textContent = "You've created a new branch and switched to it automatically! You are now working in a parallel timeline.";
+        updateUI();
+    });
+
+    btnCheckout.addEventListener('click', () => {
+        state.currentBranch = state.currentBranch === 'main' ? 'feature' : 'main';
+        infoTitle.textContent = `Switched to ${state.currentBranch}`;
+        infoText.textContent = `You used 'git checkout' to move your HEAD pointer to the ${state.currentBranch} branch.`;
+        render();
         updateUI();
     });
 
     btnMerge.addEventListener('click', () => {
         const featureHead = state.commits.filter(c => c.branch === 'feature').pop();
+        const mainHead = state.commits.filter(c => c.branch === 'main').pop();
+        
         state.currentBranch = 'main';
-        const mergeCommit = addCommit("Merge branch 'feature'", 'main', state.head);
+        const mergeCommit = addCommit("Merge branch 'feature'", 'main', mainHead);
         
         // Manual draw connection from feature branch head to merge commit
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -274,7 +300,7 @@ title: Interactive Git Visualizer
 
         state.featureBranchCreated = false;
         infoTitle.textContent = "Merged branch 'feature'";
-        infoText.textContent = "The changes from 'feature' have been combined back into 'main'. This is how teams bring completed features into the main project.";
+        infoText.textContent = "The changes from 'feature' have been combined back into 'main'. The 'feature' branch history is now part of 'main'.";
         updateUI();
     });
 
@@ -289,13 +315,16 @@ title: Interactive Git Visualizer
 
 ## How to use this project
 
-1.  **Commit**: Click `git commit` to simulate saving your work. Notice how a new circle appears on the timeline.
-2.  **Branch**: Click `git branch feature`. This moves you to a new line where you can work independently.
-3.  **Merge**: Once you've made commits on the `feature` branch, go back to `main` (the visualizer does this for you) and click `merge`. This connects your experimental work back to the main timeline.
+1.  **Commit**: Click `git commit` to save your work.
+2.  **Branch**: Click `git branch feature`. This creates a new timeline and **switches you to it**.
+3.  **Work**: Make a few commits on the `feature` branch.
+4.  **Checkout**: Click `git checkout main` to switch back to the main branch. Notice how the "HEAD" (the highlighted circle) moves.
+5.  **Merge**: Once back on `main`, click `git merge feature` to combine the work.
 
 ## Key Concepts
 
 - **Commit**: A snapshot of your code at a specific point in time.
 - **Branch**: A separate timeline for developing features or fixing bugs.
+- **Checkout**: The act of switching between branches. It moves your "HEAD" pointer.
 - **Merge**: Combining the history and changes from one branch into another.
 - **HEAD**: The current location (pointer) of where you are working in the Git history.
