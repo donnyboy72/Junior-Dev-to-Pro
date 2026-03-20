@@ -7,17 +7,119 @@
     <link rel="stylesheet" href="{{ site.baseurl }}/styles.css">
 </head>
 <body>
-    <header>
-        <a href="{{ site.baseurl }}/" style="text-decoration: none;"><h1>jrDev</h1></a>
-        <p>Master the real-world skills every junior developer needs.</p>
-    </header>
+    <div class="layout-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="{{ site.baseurl }}/" style="text-decoration: none;"><h1>jrDev</h1></a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                {% assign all_pages = site.pages | sort: "path" %}
+                {% assign last_dir = "" %}
+                
+                {% for p in all_pages %}
+                    {% assign path_parts = p.path | split: "/" %}
+                    {% if path_parts.size > 1 %}
+                        {% assign current_dir = path_parts[0] %}
+                        
+                        {% comment %} Skip system directories {% endcomment %}
+                        {% if current_dir == "assets" or current_dir == "css" or current_dir == "js" or current_dir == "_layouts" %}{% continue %}{% endif %}
+                        
+                        {% if current_dir != last_dir %}
+                            {% if last_dir != "" %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="sidebar-section">
+                                <button class="sidebar-section-header">
+                                    {{ current_dir | replace: "-", " " | capitalize }}
+                                    <span class="chevron"></span>
+                                </button>
+                                <ul class="sidebar-section-links">
+                            {% assign last_dir = current_dir %}
+                        {% endif %}
+                        
+                        {% if p.name != "index.md" and p.path contains ".md" %}
+                            <li class="{% if page.url == p.url %}active{% endif %}">
+                                <a href="{{ site.baseurl }}{{ p.url }}">{{ p.title | default: p.name | replace: ".md", "" | replace: "-", " " | capitalize }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if last_dir != "" %}
+                    </ul>
+                </div>
+                {% endif %}
+            </nav>
+        </aside>
 
-    <main style="max-width: 800px; width: 100%;">
-        {{ content }}
-    </main>
+        <!-- Main Content Area -->
+        <div class="main-container">
+            <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
 
-    <footer>
-        <p>&copy; 2025 jrDev. All rights reserved.</p>
-    </footer>
+            <header class="content-header">
+                <a href="{{ site.baseurl }}/" class="logo-mobile"><h1>jrDev</h1></a>
+                <p class="site-tagline">Master the real-world skills every junior developer needs.</p>
+            </header>
+
+            <main class="content-body">
+                {% if page.title and page.url != "/" %}
+                    <header class="page-title">
+                        <h1>{{ page.title }}</h1>
+                    </header>
+                {% endif %}
+                
+                {{ content }}
+            </main>
+
+            <footer>
+                <p>&copy; 2025 jrDev. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sidebar sections
+        document.querySelectorAll('.sidebar-section-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const section = button.parentElement;
+                section.classList.toggle('expanded');
+            });
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('open');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024 && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== menuToggle) {
+                sidebar.classList.remove('open');
+                menuToggle.classList.remove('active');
+            }
+        });
+
+        // Expand section if current page is inside it
+        window.addEventListener('DOMContentLoaded', () => {
+            const activeLink = document.querySelector('.sidebar-section-links li.active');
+            if (activeLink) {
+                const section = activeLink.closest('.sidebar-section');
+                if (section) section.classList.add('expanded');
+            }
+        });
+    </script>
 </body>
 </html>
