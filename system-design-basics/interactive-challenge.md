@@ -1,0 +1,436 @@
+---
+layout: default
+title: Scalability Challenge Game
+---
+
+<style>
+    .game-container {
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1.5rem;
+        backdrop-filter: blur(12px);
+        padding: 2rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        margin-top: 2rem;
+    }
+
+    .game-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .status-bar {
+        display: flex;
+        justify-content: space-around;
+        background: rgba(15, 23, 42, 0.5);
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .status-item {
+        text-align: center;
+    }
+
+    .status-label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .status-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--accent-color);
+    }
+
+    .visualizer {
+        height: 300px;
+        background: rgba(15, 23, 42, 0.3);
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .node {
+        width: 120px;
+        height: 80px;
+        background: rgba(30, 41, 59, 0.9);
+        border: 2px solid var(--accent-color);
+        border-radius: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+        transition: var(--transition);
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    .node.error { border-color: var(--error-color); box-shadow: 0 0 15px var(--error-color); }
+    .node.success { border-color: var(--success-color); }
+    .node.warning { border-color: var(--warning-color); }
+
+    .node-label { font-weight: 600; font-size: 0.9rem; color: #fff; }
+    .node-status { font-size: 0.7rem; color: var(--text-secondary); }
+
+    .packet {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: var(--accent-color);
+        border-radius: 50%;
+        z-index: 3;
+    }
+
+    .scenario-box {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .scenario-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--accent-color);
+    }
+
+    .choices {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .choice-btn {
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        color: var(--text-primary);
+        padding: 1rem;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        text-align: left;
+        transition: var(--transition);
+    }
+
+    .choice-btn:hover {
+        background: rgba(56, 189, 248, 0.2);
+        border-color: var(--accent-color);
+        transform: translateY(-2px);
+    }
+
+    .choice-btn strong {
+        display: block;
+        margin-bottom: 0.25rem;
+        color: var(--accent-color);
+    }
+
+    .feedback {
+        margin-top: 2rem;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        display: none;
+    }
+
+    .feedback.success { background: rgba(34, 197, 94, 0.1); border: 1px solid var(--success-color); color: #bbf7d0; display: block; }
+    .feedback.error { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error-color); color: #fecaca; display: block; }
+
+    .next-btn {
+        display: none;
+        margin: 1.5rem auto 0;
+        background: var(--accent-color);
+        color: #0f172a !important;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .next-btn:hover { transform: scale(1.05); background: #7dd3fc; }
+
+    .game-over {
+        text-align: center;
+        display: none;
+    }
+
+    @media (max-width: 640px) {
+        .choices { grid-template-columns: 1fr; }
+        .status-bar { flex-wrap: wrap; gap: 1rem; }
+    }
+</style>
+
+<div class="game-container">
+    <div class="game-header">
+        <p>Can you architect a system that survives the "Slashdot Effect"?</p>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-item">
+            <span class="status-label">Level</span>
+            <span id="level-val" class="status-value">1</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Traffic</span>
+            <span id="traffic-val" class="status-value">100 req/s</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Uptime</span>
+            <span id="uptime-val" class="status-value">100%</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Budget</span>
+            <span id="budget-val" class="status-value">$1000</span>
+        </div>
+    </div>
+
+    <div id="visualizer" class="visualizer"></div>
+
+    <div id="scenario-box" class="scenario-box">
+        <div id="scenario-title" class="scenario-title">Level 1: The Launch</div>
+        <p id="scenario-desc">Your app is live! Traffic is spiking to 1,000 req/s!</p>
+        
+        <div id="choices" class="choices"></div>
+    </div>
+
+    <div id="feedback" class="feedback"></div>
+    
+    <button id="next-btn" class="next-btn">Continue to Next Level</button>
+
+    <div id="game-over" class="game-over">
+        <h2 style="color: var(--error-color);">System Crash! 💥</h2>
+        <p>Your architecture couldn't handle the load. Remember: bottlenecks always move, they don't disappear.</p>
+        <button onclick="location.reload()" class="next-btn" style="display: block;">Try Again</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const levels = [
+            {
+                id: 1,
+                title: "Level 1: The Spiking Monolith",
+                description: "Traffic is jumping to 1,500 req/s. Your single server is hitting 95% CPU usage. Users are reporting slow load times.",
+                traffic: "1.5k req/s",
+                nodes: [
+                    { id: 'user', label: 'Users', status: 'success' },
+                    { id: 'app', label: 'App Server', status: 'warning' },
+                    { id: 'db', label: 'Database', status: 'success' }
+                ],
+                choices: [
+                    {
+                        text: "Vertical Scaling",
+                        subtext: "Upgrade to a massive 64-core CPU server.",
+                        correct: false,
+                        feedback: "While this helps temporarily, it's expensive and has a hard ceiling. You still have a Single Point of Failure (SPOF).",
+                        action: () => { updateNode('app', { label: 'MEGA Server', status: 'success' }); }
+                    },
+                    {
+                        text: "Horizontal Scaling",
+                        subtext: "Add a Load Balancer and multiple App Servers.",
+                        correct: true,
+                        feedback: "Correct! This allows you to scale by adding more cheap nodes. It also provides high availability.",
+                        action: () => { 
+                            const viz = document.getElementById('visualizer');
+                            viz.innerHTML = '';
+                            createNode('user', 'Users', 'success');
+                            createNode('lb', 'Load Balancer', 'success');
+                            createNode('app1', 'App Srv 1', 'success');
+                            createNode('app2', 'App Srv 2', 'success');
+                            createNode('db', 'Database', 'success');
+                        }
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Level 2: The Database Bottleneck",
+                description: "You now have 3 app servers, but traffic has grown to 5,000 req/s. The Database is now the bottleneck.",
+                traffic: "5k req/s",
+                nodes: [
+                    { id: 'lb', label: 'LB', status: 'success' },
+                    { id: 'apps', label: 'App Pool', status: 'success' },
+                    { id: 'db', label: 'Database', status: 'error' }
+                ],
+                choices: [
+                    {
+                        text: "Add Read Replicas",
+                        subtext: "Deploy 2 copies of the DB to handle read traffic.",
+                        correct: false,
+                        feedback: "Good, but hitting a DB is still 'expensive' in terms of latency compared to memory.",
+                    },
+                    {
+                        text: "Implement Caching",
+                        subtext: "Add Redis to store frequent query results in memory.",
+                        correct: true,
+                        feedback: "Exactly! Most web traffic is read-heavy. Redis can handle 100k+ req/s with sub-millisecond latency.",
+                        action: () => {
+                            createNode('cache', 'Redis Cache', 'success');
+                        }
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Level 3: The Blocking Task",
+                description: "Each 'Generate PDF' report takes 30 seconds. Your App Servers hang and stop responding to other users.",
+                traffic: "10k req/s",
+                choices: [
+                    {
+                        text: "Increase Server Timeout",
+                        subtext: "Allow requests to wait for 60 seconds.",
+                        correct: false,
+                        feedback: "This makes it worse! Now your server threads are tied up waiting, causing a backup for everyone else.",
+                    },
+                    {
+                        text: "Message Queue + Workers",
+                        subtext: "Use RabbitMQ to process reports in the background.",
+                        correct: true,
+                        feedback: "Perfect. Asynchronous processing decouples the user request from the heavy work.",
+                        action: () => {
+                            createNode('mq', 'Message Queue', 'success');
+                            createNode('worker', 'Worker Srv', 'success');
+                        }
+                    }
+                ]
+            }
+        ];
+
+        let currentLevel = 0;
+        const visualizer = document.getElementById('visualizer');
+        const feedbackEl = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+
+        function createNode(id, label, status = 'success') {
+            const node = document.createElement('div');
+            node.id = `node-${id}`;
+            node.className = `node ${status}`;
+            node.innerHTML = `
+                <div class="node-label">${label}</div>
+                <div class="node-status">${status.toUpperCase()}</div>
+            `;
+            visualizer.appendChild(node);
+            return node;
+        }
+
+        function updateNode(id, data) {
+            const node = document.getElementById(`node-${id}`);
+            if (node) {
+                if (data.label) node.querySelector('.node-label').textContent = data.label;
+                if (data.status) {
+                    node.className = `node ${data.status}`;
+                    node.querySelector('.node-status').textContent = data.status.toUpperCase();
+                }
+            }
+        }
+
+        function loadLevel(idx) {
+            const level = levels[idx];
+            currentLevel = idx;
+            
+            document.getElementById('level-val').textContent = level.id;
+            document.getElementById('traffic-val').textContent = level.traffic;
+            document.getElementById('scenario-title').textContent = level.title;
+            document.getElementById('scenario-desc').textContent = level.description;
+            
+            feedbackEl.style.display = 'none';
+            nextBtn.style.display = 'none';
+
+            if (idx === 0) {
+                visualizer.innerHTML = '';
+                level.nodes.forEach(n => createNode(n.id, n.label, n.status));
+            }
+
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+            level.choices.forEach((choice) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.innerHTML = `<strong>${choice.text}</strong>${choice.subtext}`;
+                btn.onclick = () => {
+                    feedbackEl.textContent = choice.feedback;
+                    feedbackEl.className = `feedback ${choice.correct ? 'success' : 'error'}`;
+                    feedbackEl.style.display = 'block';
+
+                    if (choice.correct) {
+                        if (choice.action) choice.action();
+                        nextBtn.style.display = 'block';
+                        if (currentLevel === levels.length - 1) {
+                            nextBtn.textContent = "Finish Challenge";
+                        }
+                    } else {
+                        nextBtn.style.display = 'none';
+                        const uptime = document.getElementById('uptime-val');
+                        uptime.textContent = (parseInt(uptime.textContent) - 10) + '%';
+                        if (parseInt(uptime.textContent) <= 50) {
+                            document.getElementById('scenario-box').style.display = 'none';
+                            document.getElementById('game-over').style.display = 'block';
+                        }
+                    }
+                };
+                choicesContainer.appendChild(btn);
+            });
+        }
+
+        nextBtn.onclick = () => {
+            if (currentLevel < levels.length - 1) {
+                loadLevel(currentLevel + 1);
+            } else {
+                document.getElementById('scenario-box').innerHTML = `
+                    <div class="scenario-title">Architecture Complete! 🏆</div>
+                    <p>You've successfully scaled from a simple monolith to a distributed system.</p>
+                    <button onclick="location.reload()" class="next-btn" style="display: block;">Play Again</button>
+                `;
+                nextBtn.style.display = 'none';
+            }
+        };
+
+        function animateTraffic() {
+            if (Math.random() > 0.7) {
+                const packet = document.createElement('div');
+                packet.className = 'packet';
+                const startNode = visualizer.firstElementChild;
+                const endNode = visualizer.lastElementChild;
+                
+                if (startNode && endNode) {
+                    const startRect = startNode.getBoundingClientRect();
+                    const endRect = endNode.getBoundingClientRect();
+                    const vizRect = visualizer.getBoundingClientRect();
+
+                    packet.style.left = (startRect.right - vizRect.left) + 'px';
+                    packet.style.top = (startRect.top - vizRect.top + 40) + 'px';
+                    
+                    visualizer.appendChild(packet);
+
+                    packet.animate([
+                        { left: (startRect.right - vizRect.left) + 'px' },
+                        { left: (endRect.left - vizRect.left) + 'px' }
+                    ], {
+                        duration: 1500,
+                        easing: 'linear'
+                    }).onfinish = () => packet.remove();
+                }
+            }
+            requestAnimationFrame(animateTraffic);
+        }
+
+        loadLevel(0);
+        animateTraffic();
+    })();
+</script>

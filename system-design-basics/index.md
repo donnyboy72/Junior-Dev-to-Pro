@@ -32,7 +32,7 @@ System design is the process of defining the architecture, components, modules, 
 ## 🎮 Practice Your Skills
 Ready to put your knowledge to the test? 
 
-Try the **[Scalability Challenge Game](../system-design-game.html)**. You'll take on the role of an architect trying to keep a system alive as traffic explodes!
+Try the **[Scalability Challenge Game](./interactive-challenge.md)**. You'll take on the role of an architect trying to keep a system alive as traffic explodes!
 
 ---
 

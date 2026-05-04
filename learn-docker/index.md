@@ -67,7 +67,7 @@ If you are new to Docker, follow the lessons in this order:
 # 🐳 Practice Your Skills
 Ready to earn your sea legs? 
 
-Try the **[Docker Captain's Challenge](../docker-game.html)**. You'll build Dockerfiles, manage volumes, and orchestrate a multi-container app in a simulated terminal environment!
+Try the **[Docker Captain's Challenge](./interactive-challenge.md)**. You'll build Dockerfiles, manage volumes, and orchestrate a multi-container app in a simulated terminal environment!
 
 ---
 
