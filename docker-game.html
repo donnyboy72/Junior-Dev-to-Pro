@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Captain's Challenge | jrDev</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #0db7ed; /* Docker Blue */
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --terminal-bg: #000000;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-container {
+            max-width: 1000px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            backdrop-filter: blur(12px);
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .game-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+        }
+
+        .terminal-window {
+            background: var(--terminal-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-output {
+            flex: 1;
+            overflow-y: auto;
+            color: #d1d5db;
+            line-height: 1.5;
+        }
+
+        .prompt { color: var(--success-color); margin-right: 10px; }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .task-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .choice-btn {
+            background: rgba(13, 183, 237, 0.1);
+            border: 1px solid rgba(13, 183, 237, 0.2);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: left;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .choice-btn:hover {
+            background: rgba(13, 183, 237, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .dockerfile-view {
+            background: #1e1e1e;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #ccc;
+            white-space: pre;
+            border: 1px solid #444;
+        }
+
+        .dockerfile-view span.keyword { color: #569cd6; font-weight: bold; }
+        .dockerfile-view span.value { color: #ce9178; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .status-running { background: var(--success-color); color: #fff; }
+        .status-failed { background: var(--error-color); color: #fff; }
+        .status-idle { background: #4b5563; color: #fff; }
+
+        .hidden { display: none; }
+
+        #level-indicator {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="level-indicator">Level 1/3</div>
+
+    <div class="game-container">
+        <header>
+            <h1>Docker Captain's Challenge</h1>
+            <p>Master the art of containerization by solving real-world deployment puzzles.</p>
+        </header>
+
+        <div class="game-layout">
+            <div class="main-stage">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <span style="margin-left: 10px; color: #666; font-size: 0.8rem;">docker-terminal</span>
+                    </div>
+                    <div id="terminal-output" class="terminal-output">
+                        <div><span class="prompt">$</span>Welcome to Docker Engine v24.0...</div>
+                        <div><span class="prompt">$</span>Waiting for input...</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem;">
+                    <h3 style="margin-bottom: 0.5rem;">Current Dockerfile</h3>
+                    <div id="dockerfile-display" class="dockerfile-view"># Empty Dockerfile</div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div id="task-container" class="task-card">
+                    <div id="task-title" class="task-title">The First Layer</div>
+                    <p id="task-desc">We need to containerize a Node.js application. Every Dockerfile starts with a base image. Which one should we use to keep the image small and secure?</p>
+                    
+                    <div id="choices" class="choices">
+                        <!-- Choices injected here -->
+                    </div>
+                </div>
+
+                <div id="feedback-container" class="task-card hidden" style="border-left-color: var(--success-color);">
+                    <div id="feedback-title" class="task-title" style="color: var(--success-color);">Correct!</div>
+                    <p id="feedback-text"></p>
+                    <button id="continue-btn" class="choice-btn" style="width: 100%; margin-top: 1rem; font-weight: bold; text-align: center;">Next Step</button>
+                </div>
+
+                <div id="completion-card" class="task-card hidden" style="border-left-color: var(--success-color); text-align: center;">
+                    <h2 style="color: var(--success-color);">Deployment Successful! 🐳</h2>
+                    <p>You've successfully built, optimized, and deployed the application.</p>
+                    <button onclick="location.reload()" class="choice-btn" style="width: 100%; margin-top: 1rem; text-align: center;">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gameData = [
+            {
+                level: 1,
+                title: "The Base Image",
+                desc: "We're containerizing a Node.js app. Select the best base image to ensure a small, efficient container.",
+                choices: [
+                    {
+                        text: "FROM ubuntu:latest",
+                        correct: false,
+                        feedback: "Too heavy! Ubuntu is a full OS. For a Node app, we should use an image that already has Node installed and is optimized for size.",
+                        dockerfile: "FROM ubuntu:latest\nRUN apt-get update && apt-get install -y nodejs"
+                    },
+                    {
+                        text: "FROM node:18-alpine",
+                        correct: true,
+                        feedback: "Perfect! Alpine Linux is incredibly small (~5MB), making your final image lightweight and more secure by reducing the attack surface.",
+                        dockerfile: "FROM node:18-alpine"
+                    }
+                ]
+            },
+            {
+                level: 1,
+                title: "Layer Optimization",
+                desc: "Now we need to copy our code. To take advantage of Docker's layer caching, what should we copy first?",
+                choices: [
+                    {
+                        text: "COPY . .",
+                        correct: false,
+                        feedback: "Not quite. If you copy everything first, any small change to your code will force Docker to re-install all your dependencies (npm install), which is slow.",
+                        dockerfile: "FROM node:18-alpine\nCOPY . ."
+                    },
+                    {
+                        text: "COPY package.json .",
+                        correct: true,
+                        feedback: "Smart! By copying only the dependency files first and running install, Docker will cache this layer. It won't re-run 'npm install' unless you change your dependencies.",
+                        dockerfile: "FROM node:18-alpine\nWORKDIR /app\nCOPY package.json . \nRUN npm install\nCOPY . ."
+                    }
+                ]
+            },
+            {
+                level: 2,
+                title: "Data Persistence",
+                desc: "The app is running, but when the container restarts, all uploaded user images disappear! How do we fix this?",
+                choices: [
+                    {
+                        text: "Save to /app/uploads",
+                        correct: false,
+                        feedback: "Containers are ephemeral! Anything saved inside a container's writable layer is lost when the container is deleted.",
+                        dockerfile: "FROM node:18-alpine\nWORKDIR /app\n# ... previous steps\nCMD [\"npm\", \"start\"]"
+                    },
+                    {
+                        text: "Use Docker Volumes",
+                        correct: true,
+                        feedback: "Exactly. Volumes are stored outside the container's lifecycle, allowing data to persist even if the container is destroyed or updated.",
+                        dockerfile: "FROM node:18-alpine\nWORKDIR /app\n# ... previous steps\nVOLUME /app/uploads\nCMD [\"npm\", \"start\"]"
+                    }
+                ]
+            },
+            {
+                level: 3,
+                title: "The Compose Challenge",
+                desc: "Your app now needs a database. Instead of manual setup, how should we manage both containers together?",
+                choices: [
+                    {
+                        text: "Run two 'docker run' commands",
+                        correct: false,
+                        feedback: "Managing multiple containers manually is error-prone. You'd have to handle networks and links yourself.",
+                        dockerfile: "# App Dockerfile is done, but orchestration is missing!"
+                    },
+                    {
+                        text: "Create a docker-compose.yml",
+                        correct: true,
+                        feedback: "Correct. Docker Compose allows you to define your entire multi-container stack in a single file, including networks and environment variables.",
+                        dockerfile: "version: '3.8'\nservices:\n  app:\n    build: .\n    ports: ['3000:3000']\n  db:\n    image: postgres:alpine"
+                    }
+                ]
+            }
+        ];
+
+        let currentStep = 0;
+        const terminalOutput = document.getElementById('terminal-output');
+        const dockerfileDisplay = document.getElementById('dockerfile-display');
+        const taskContainer = document.getElementById('task-container');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const completionCard = document.getElementById('completion-card');
+        const levelIndicator = document.getElementById('level-indicator');
+
+        function typeTerminal(text, type = 'info') {
+            const line = document.createElement('div');
+            line.innerHTML = `<span class="prompt">$</span>${text}`;
+            if (type === 'error') line.style.color = 'var(--error-color)';
+            if (type === 'success') line.style.color = 'var(--success-color)';
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        function highlightDockerfile(code) {
+            return code
+                .replace(/(FROM|RUN|COPY|WORKDIR|CMD|VOLUME|version|services|build|image|ports)/g, '<span class="keyword">$1</span>')
+                .replace(/(['"].*?['"])/g, '<span class="value">$1</span>');
+        }
+
+        function loadStep() {
+            const step = gameData[currentStep];
+            levelIndicator.textContent = `Level ${step.level}/3`;
+            
+            document.getElementById('task-title').textContent = step.title;
+            document.getElementById('task-desc').textContent = step.desc;
+            
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            
+            step.choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choice.text;
+                btn.onclick = () => handleChoice(choice);
+                choicesDiv.appendChild(btn);
+            });
+
+            taskContainer.classList.remove('hidden');
+            feedbackContainer.classList.add('hidden');
+        }
+
+        function handleChoice(choice) {
+            if (choice.correct) {
+                typeTerminal(`docker build -t my-app:latest .`, 'info');
+                setTimeout(() => {
+                    typeTerminal(`Successfully built image layer...`, 'success');
+                    dockerfileDisplay.innerHTML = highlightDockerfile(choice.dockerfile);
+                    showFeedback(true, choice.feedback);
+                }, 800);
+            } else {
+                typeTerminal(`Error: Build failed at layer...`, 'error');
+                showFeedback(false, choice.feedback);
+            }
+        }
+
+        function showFeedback(isCorrect, text) {
+            taskContainer.classList.add('hidden');
+            feedbackContainer.classList.remove('hidden');
+            
+            const title = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+            const continueBtn = document.getElementById('continue-btn');
+
+            feedbackText.textContent = text;
+            
+            if (isCorrect) {
+                title.textContent = "Correct!";
+                title.style.color = "var(--success-color)";
+                feedbackContainer.style.borderLeftColor = "var(--success-color)";
+                continueBtn.textContent = "Next Challenge";
+                continueBtn.onclick = nextStep;
+            } else {
+                title.textContent = "Try Again";
+                title.style.color = "var(--error-color)";
+                feedbackContainer.style.borderLeftColor = "var(--error-color)";
+                continueBtn.textContent = "Back to Task";
+                continueBtn.onclick = () => {
+                    feedbackContainer.classList.add('hidden');
+                    taskContainer.classList.remove('hidden');
+                };
+            }
+        }
+
+        function nextStep() {
+            currentStep++;
+            if (currentStep < gameData.length) {
+                loadStep();
+            } else {
+                feedbackContainer.classList.add('hidden');
+                completionCard.classList.remove('hidden');
+                typeTerminal("System Ready. All containers healthy.", "success");
+            }
+        }
+
+        loadStep();
+    </script>
+</body>
+</html>
