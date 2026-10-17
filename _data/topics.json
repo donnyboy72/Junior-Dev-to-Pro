@@ -84,6 +84,13 @@
     "description": "Take a change from automated checks to a verified release."
   },
   {
+    "slug": "ai-coding",
+    "title": "AI-assisted coding",
+    "group": "Build & ship",
+    "icon": "bulb",
+    "description": "Direct AI tools, review their work, and build your first coding agent."
+  },
+  {
     "slug": "learn-architecture",
     "title": "Software architecture",
     "group": "Systems",

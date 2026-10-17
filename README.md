@@ -38,11 +38,12 @@ The project currently includes sections on:
 - Build tools
 - Dependency management
 - CI/CD pipelines
+- AI-assisted coding and coding agents
 - Open source contributions
 - Common mistakes made by junior developers
 - Interview preparation
 
-All 24 topics have an overview and a learning path. Lessons introduce practical concepts through examples, and the newer modules include practice tasks with checks for understanding. Git, Docker, debugging, and system design also include browser-based visualizers or challenges.
+All 25 topics have an overview and a learning path. Lessons introduce practical concepts through examples, and the newer modules include practice tasks with checks for understanding. Git, Docker, debugging, and system design also include browser-based visualizers or challenges.
 
 ## Repository Structure
 
@@ -75,3 +76,7 @@ Contributions are welcome. If you have experience with professional development 
 ## License
 
 This project is open source and intended for educational use.
+
+## AI-Assisted Coding
+
+The [AI coding module](ai-coding/index.md) covers prompting, project context, generated-code review, debugging and tests, agent setup, tool loops, permissions, MCP, and cost control. It includes an offline Python loop demo and a small coding capstone. The setup lesson uses [Geoffrey Huntley's workshop](https://github.com/ghuntley/how-to-build-a-coding-agent) as a credited companion resource; its Go implementation remains in the upstream repository.

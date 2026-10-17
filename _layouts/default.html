@@ -48,7 +48,7 @@
             <a class="brand" href="{{ '/' | relative_url }}" aria-label="jrDev home"><span class="brand-mark" aria-hidden="true">j<span>r</span></span><span>jrDev<span class="brand-caption">A DEVELOPER FIELD GUIDE</span></span></a>
             <label class="nav-search"><svg aria-hidden="true"><use href="#icon-search"></use></svg><input id="navSearch" type="search" placeholder="Find a lesson…" aria-label="Search navigation"></label>
             <a class="overview-link {% if page.home %}current{% endif %}" href="{{ '/' | relative_url }}" {% if page.home %}aria-current="page"{% endif %}><svg aria-hidden="true"><use href="#icon-grid"></use></svg>Explore the guide <span aria-hidden="true">↗</span></a>
-            <p class="nav-label">THE CURRICULUM <span>24 TOPICS</span></p>
+            <p class="nav-label">THE CURRICULUM <span>{{ site.data.topics | size }} TOPICS</span></p>
             <nav class="course-nav" aria-label="Topics and lessons">
                 {% assign topic_groups = 'Foundation|Build & ship|Systems|Teamwork' | split: '|' %}
                 {% assign all_pages = site.pages | sort: 'path' %}
