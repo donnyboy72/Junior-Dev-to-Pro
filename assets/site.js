@@ -1,5 +1,45 @@
 (() => {
   "use strict";
+  const themeToggle = document.getElementById("themeToggle");
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+  let savedTheme;
+  try {
+    savedTheme = localStorage.getItem("jrdev-theme");
+  } catch (_) {}
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+  }
+  applyTheme(
+    savedTheme === "dark" || savedTheme === "light"
+      ? savedTheme
+      : systemTheme.matches
+        ? "dark"
+        : "light",
+  );
+  themeToggle.addEventListener("click", () => {
+    savedTheme =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(savedTheme);
+    try {
+      localStorage.setItem("jrdev-theme", savedTheme);
+    } catch (_) {}
+  });
+  systemTheme.addEventListener("change", () => {
+    if (savedTheme !== "dark" && savedTheme !== "light")
+      applyTheme(systemTheme.matches ? "dark" : "light");
+  });
+  window.addEventListener("storage", (event) => {
+    if (event.key !== "jrdev-theme" && event.key !== null) return;
+    savedTheme = event.newValue;
+    applyTheme(
+      savedTheme === "dark" || savedTheme === "light"
+        ? savedTheme
+        : systemTheme.matches
+          ? "dark"
+          : "light",
+    );
+  });
   const sidebar = document.getElementById("courseSidebar");
   const menu = document.getElementById("menuToggle");
   const backdrop = document.getElementById("navBackdrop");

@@ -968,7 +968,7 @@ button:disabled {
   font-size: 12px;
   overflow-wrap: normal;
 }
-.lesson-content .highlight {
+.lesson-content div.highlight {
   background: transparent;
   margin: 0;
 }
@@ -1416,5 +1416,158 @@ button:disabled {
     white-space: pre-wrap;
     color: black;
     background: #eee;
+  }
+}
+
+/* Theme preference is set before paint; code blocks stay dark in both themes. */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.theme-toggle > span:first-child {
+  font-size: 19px;
+  line-height: 1;
+}
+.theme-toggle:hover {
+  border-color: var(--teal);
+}
+.theme-toggle[aria-pressed="true"] {
+  background: var(--teal-soft);
+  border-color: var(--teal);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #111e22;
+  --surface: #1a2b2f;
+  --ink: #e2ede7;
+  --muted: #adbfba;
+  --line: #35494b;
+  --teal: #8bd4b8;
+  --teal-soft: #263e37;
+  --text-primary: #e2ede7;
+  --text-secondary: #adbfba;
+  --accent-color: #8bd4b8;
+  --card-bg: #1a2b2f;
+  --card-hover-bg: #243b3c;
+}
+[data-theme="dark"] .button-primary {
+  background: #8bd4b8;
+  color: #102b23;
+}
+[data-theme="dark"] .button-primary:hover {
+  background: #a8e7cc;
+}
+[data-theme="dark"]
+  :is(
+    .github-link,
+    .filter-button,
+    .topic-card p,
+    .card-group,
+    .card-bottom,
+    .card-number,
+    .topic-total,
+    .hero-description,
+    .hero-meta,
+    .lesson-content
+  ) {
+  color: var(--muted);
+}
+[data-theme="dark"] :is(.path-preview, .practice-banner) {
+  background: #21352f;
+  border-color: #3e5544;
+}
+[data-theme="dark"]
+  :is(.path-step p, .path-note, .path-preview .eyebrow, .practice-banner p) {
+  color: #b8c9ad;
+}
+[data-theme="dark"] :is(.step-number, .step-mark, .path-symbol) {
+  color: #bedaa2;
+}
+[data-theme="dark"] :is(.path-preview-header, .path-step, .practice-icon) {
+  border-color: #486044;
+}
+[data-theme="dark"] .path-preview::after {
+  background: #5e73517a;
+}
+[data-theme="dark"] .filter-button.active {
+  background: #b8d8b3;
+  color: #112a23;
+}
+[data-theme="dark"] .filter-button:hover {
+  background: #30473d;
+  color: var(--ink);
+}
+[data-theme="dark"] .topic-card {
+  border-color: var(--line);
+}
+[data-theme="dark"] .topic-card:hover {
+  background: #223936;
+  border-color: #7ba790;
+}
+[data-theme="dark"] .card-bottom {
+  border-color: var(--line);
+}
+[data-theme="dark"] .interactive-dot {
+  color: #97d7b4;
+}
+[data-theme="dark"] .topic-card .topic-icon {
+  background: #354437;
+  color: #c4dfa7;
+}
+[data-theme="dark"] .topic-card[data-group="Build & ship"] .topic-icon {
+  background: #473b31;
+  color: #ebbd95;
+}
+[data-theme="dark"] .topic-card[data-group="Systems"] .topic-icon {
+  background: #2d404b;
+  color: #a9cde2;
+}
+[data-theme="dark"] .topic-card[data-group="Teamwork"] .topic-icon {
+  background: #41384c;
+  color: #d2bade;
+}
+[data-theme="dark"] .lesson-content blockquote {
+  background: #263e32;
+  color: #cee2c5;
+}
+[data-theme="dark"] .lesson-content th {
+  background: #263e32;
+}
+[data-theme="dark"] .lesson-content :not(pre) > code {
+  background: #2a4038;
+  color: #c0e3cc;
+}
+@media (max-width: 680px) {
+  .topbar-actions {
+    gap: 10px;
+  }
+  .theme-toggle {
+    padding: 7px 9px;
+  }
+  .topbar-actions .github-link {
+    font-size: 10px;
+  }
+}
+@media (max-width: 390px) {
+  .theme-toggle > span:last-child {
+    display: none;
+  }
+  .theme-toggle {
+    min-width: 40px;
   }
 }
