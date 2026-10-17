@@ -5,7 +5,6 @@ title: jrDev
 
 https://donnyboy72.github.io/Junior-Dev-to-Pro/
 
-THIS IS FAR FROM BEING FINISHED
 # jrDev
 
 jrDev is a practical guide designed to help students and beginner programmers become better **junior software developers**.
@@ -43,7 +42,17 @@ The project currently includes sections on:
 - Common mistakes made by junior developers
 - Interview preparation
 
-Each topic will contain short lessons and examples explaining how these concepts are used in real development environments.
+All 24 topics have an overview and a learning path. Lessons introduce practical concepts through examples, and the newer modules include practice tasks with checks for understanding. Git, Docker, debugging, and system design also include browser-based visualizers or challenges.
+
+## Repository Structure
+
+- `index.html` lists the topic modules.
+- Each topic directory contains an `index.md` overview and individual Markdown lessons.
+- `_layouts/default.html` provides the shared layout and generates sidebar navigation from the pages.
+- `styles.css` contains the shared theme and responsive styles.
+- `_config.yml` sets the Jekyll site configuration and GitHub Pages base path.
+
+To add a lesson, include `layout: default` and a `title` in its YAML front matter, then link it from the module overview. Use the generated `.html` destination for new lesson links. Keep examples explicit about prerequisites and distinguish illustrative services from tools included in this repository.
 
 ## Purpose
 

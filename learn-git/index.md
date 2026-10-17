@@ -158,8 +158,9 @@ Follow these sections in order if you are new to Git.
 6. [Merging](merging.md)
 7. [Resolving conflicts](resolving-conflicts.md)
 8. [Fixing common mistakes](fixing-mistakes.md)
-9. [Interactive Visual Git Guide](git-visualizer.md)
-10. [**Git Branching Challenge (Game)**](git-game.md)
+9. [Git Workflows](git-workflows.html)
+10. [Interactive Visual Git Guide](git-visualizer.md)
+11. [**Git Branching Challenge (Game)**](git-game.md)
 
 ---
 
