@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Observability: Logging & Monitoring
+title: "Observability: Logging & Monitoring"
 ---
 
 # Observability: Logging & Monitoring

@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "learn-git",
+    "title": "Git & version control",
+    "group": "Foundation",
+    "icon": "git",
+    "description": "Build confidence with commits, branches, and collaboration."
+  },
+  {
+    "slug": "terminal-skills",
+    "title": "Terminal skills",
+    "group": "Foundation",
+    "icon": "terminal",
+    "description": "Find your way around the command line and make it work for you."
+  },
+  {
+    "slug": "reading-code",
+    "title": "Reading code",
+    "group": "Foundation",
+    "icon": "code",
+    "description": "Navigate unfamiliar projects and follow the flow of a program."
+  },
+  {
+    "slug": "writing-good-code",
+    "title": "Writing good code",
+    "group": "Foundation",
+    "icon": "pen",
+    "description": "Write clear, maintainable code that your teammates can trust."
+  },
+  {
+    "slug": "debugging",
+    "title": "Debugging",
+    "group": "Foundation",
+    "icon": "bug",
+    "description": "Turn confusing failures into a repeatable problem-solving process."
+  },
+  {
+    "slug": "testing",
+    "title": "Testing",
+    "group": "Foundation",
+    "icon": "check",
+    "description": "Catch regressions and know when your changes actually work."
+  },
+  {
+    "slug": "learn-docker",
+    "title": "Docker",
+    "group": "Build & ship",
+    "icon": "box",
+    "description": "Package applications and understand the containers running them."
+  },
+  {
+    "slug": "working-with-apis",
+    "title": "Working with APIs",
+    "group": "Build & ship",
+    "icon": "arrows",
+    "description": "Connect applications with reliable requests and useful responses."
+  },
+  {
+    "slug": "databases",
+    "title": "Databases",
+    "group": "Build & ship",
+    "icon": "database",
+    "description": "Model your data, write queries, and keep changes consistent."
+  },
+  {
+    "slug": "build-tools",
+    "title": "Build tools",
+    "group": "Build & ship",
+    "icon": "tool",
+    "description": "Understand how source code becomes something you can ship."
+  },
+  {
+    "slug": "dependency-management",
+    "title": "Dependencies",
+    "group": "Build & ship",
+    "icon": "layers",
+    "description": "Keep project environments predictable and packages up to date."
+  },
+  {
+    "slug": "ci-cd",
+    "title": "CI/CD",
+    "group": "Build & ship",
+    "icon": "play",
+    "description": "Take a change from automated checks to a verified release."
+  },
+  {
+    "slug": "learn-architecture",
+    "title": "Software architecture",
+    "group": "Systems",
+    "icon": "layers",
+    "description": "See how components fit together and where responsibilities belong."
+  },
+  {
+    "slug": "system-design-basics",
+    "title": "System design",
+    "group": "Systems",
+    "icon": "grid",
+    "description": "Think through requests, storage, scale, and system tradeoffs."
+  },
+  {
+    "slug": "performance-basics",
+    "title": "Performance",
+    "group": "Systems",
+    "icon": "pulse",
+    "description": "Measure the slow parts and make improvements that matter."
+  },
+  {
+    "slug": "security-basics",
+    "title": "Security",
+    "group": "Systems",
+    "icon": "shield",
+    "description": "Protect data, handle input, and enforce the right access rules."
+  },
+  {
+    "slug": "logging-and-monitoring",
+    "title": "Logging & monitoring",
+    "group": "Systems",
+    "icon": "pulse",
+    "description": "Understand what your application is doing after it ships."
+  },
+  {
+    "slug": "code-reviews",
+    "title": "Code reviews",
+    "group": "Teamwork",
+    "icon": "code",
+    "description": "Give useful feedback and learn from another perspective."
+  },
+  {
+    "slug": "pull-requests",
+    "title": "Pull requests",
+    "group": "Teamwork",
+    "icon": "git",
+    "description": "Make your changes easy to review, integrate, and release."
+  },
+  {
+    "slug": "development-workflow",
+    "title": "Development workflow",
+    "group": "Teamwork",
+    "icon": "arrows",
+    "description": "Turn an unclear request into a small, verified result."
+  },
+  {
+    "slug": "documentation",
+    "title": "Documentation",
+    "group": "Teamwork",
+    "icon": "book",
+    "description": "Explain the setup, the interface, and the decisions behind it."
+  },
+  {
+    "slug": "open-source-contributions",
+    "title": "Open source",
+    "group": "Teamwork",
+    "icon": "globe",
+    "description": "Find a useful contribution and work with project maintainers."
+  },
+  {
+    "slug": "common-mistakes",
+    "title": "Common mistakes",
+    "group": "Teamwork",
+    "icon": "bulb",
+    "description": "Build better habits around uncertainty, scope, and verification."
+  },
+  {
+    "slug": "interview-prep",
+    "title": "Interview preparation",
+    "group": "Teamwork",
+    "icon": "message",
+    "description": "Practice explaining your reasoning, projects, and experience."
+  }
+]

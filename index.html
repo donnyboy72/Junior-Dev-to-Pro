@@ -1,31 +1,57 @@
 ---
 layout: default
-title: Thank you for visiting jrDev
+title: Your developer field guide
+home: true
 ---
-
-<div class="grid-container">
-    <a href="learn-git/" class="topic-card">Learn Git</a>
-    <a href="learn-docker/" class="topic-card">Learn Docker</a>
-    <a href="learn-architecture/" class="topic-card">Learn Architecture</a>
-    <a href="debugging/" class="topic-card">Debugging</a>
-    <a href="writing-good-code/" class="topic-card">Writing Good Code</a>
-    <a href="reading-code/" class="topic-card">Reading Code</a>
-    <a href="testing/" class="topic-card">Testing</a>
-    <a href="system-design-basics/" class="topic-card">System Design Basics</a>
-    <a href="working-with-apis/" class="topic-card">Working with APIs</a>
-    <a href="databases/" class="topic-card">Databases</a>
-    <a href="terminal-skills/" class="topic-card">Terminal Skills</a>
-    <a href="code-reviews/" class="topic-card">Code Reviews</a>
-    <a href="pull-requests/" class="topic-card">Pull Requests</a>
-    <a href="development-workflow/" class="topic-card">Development Workflow</a>
-    <a href="documentation/" class="topic-card">Documentation</a>
-    <a href="performance-basics/" class="topic-card">Performance Basics</a>
-    <a href="security-basics/" class="topic-card">Security Basics</a>
-    <a href="logging-and-monitoring/" class="topic-card">Logging and Monitoring</a>
-    <a href="build-tools/" class="topic-card">Build Tools</a>
-    <a href="dependency-management/" class="topic-card">Dependency Management</a>
-    <a href="ci-cd/" class="topic-card">CI/CD</a>
-    <a href="open-source-contributions/" class="topic-card">Open Source Contributions</a>
-    <a href="common-mistakes/" class="topic-card">Common Mistakes</a>
-    <a href="interview-prep/" class="topic-card">Interview Prep</a>
-</div>
+<section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> THE PRACTICAL DEVELOPER FIELD GUIDE</p>
+        <h1 id="hero-title">The skills between<br>your first line of code<br>and your <em>first real job.</em></h1>
+        <p class="hero-description">Less guesswork. More building. Learn the tools, habits, and workflows that turn a beginner into a confident developer.</p>
+        <div class="hero-actions">
+            <a class="button button-primary" href="{{ '/learn-git/' | relative_url }}">Start with the foundations <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#topics">Explore the field guide <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-meta"><span>24 focused topics</span><span>Hands-on practice</span><span>Free & open source</span></div>
+    </div>
+    <div class="path-preview" aria-label="Suggested learning journey">
+        <div class="path-preview-header"><span class="eyebrow">YOUR NEXT CHAPTER</span><span class="path-symbol" aria-hidden="true">↗</span></div>
+        <div class="path-step"><span class="step-number">01</span><div><strong>Get your bearings</strong><p>Git, terminal, and reading code</p></div><span class="step-mark" aria-hidden="true">✓</span></div>
+        <div class="path-step"><span class="step-number">02</span><div><strong>Build with confidence</strong><p>Testing, APIs, and Docker</p></div><span class="step-mark" aria-hidden="true">↗</span></div>
+        <div class="path-step"><span class="step-number">03</span><div><strong>Think beyond the code</strong><p>Systems, security, and teamwork</p></div><span class="step-mark" aria-hidden="true">↗</span></div>
+        <p class="path-note">One concept. One small step. Real progress.</p>
+    </div>
+</section>
+<section class="practice-banner" aria-label="Interactive practice">
+    <span class="practice-icon" aria-hidden="true">&gt;_</span>
+    <div><strong>Learn it. Then try it.</strong><p>Make commits, explore containers, and investigate a broken system in your browser.</p></div>
+    <a href="{{ '/learn-git/git-game.html' | relative_url }}">Try a challenge <span aria-hidden="true">↗</span></a>
+</section>
+<section id="topics" class="topic-library" aria-labelledby="topics-title">
+    <div class="section-heading"><div><p class="eyebrow">BUILD YOUR TOOLKIT</p><h2 id="topics-title">A little more capable, every day.</h2></div><span class="topic-total">24 topics to explore</span></div>
+    <div class="library-toolbar">
+        <div class="topic-filters" role="group" aria-label="Filter topics">
+            <button type="button" class="filter-button active" data-filter="all" aria-pressed="true">All topics</button>
+            <button type="button" class="filter-button" data-filter="Foundation" aria-pressed="false">Foundations</button>
+            <button type="button" class="filter-button" data-filter="Build & ship" aria-pressed="false">Build & ship</button>
+            <button type="button" class="filter-button" data-filter="Systems" aria-pressed="false">Systems</button>
+            <button type="button" class="filter-button" data-filter="Teamwork" aria-pressed="false">Teamwork</button>
+        </div>
+        <label class="topic-search"><svg aria-hidden="true"><use href="#icon-search"></use></svg><input id="topicSearch" type="search" placeholder="Find a topic…" aria-label="Search topics"></label>
+    </div>
+    <p class="sr-only" id="topicResults" role="status" aria-live="polite"></p>
+    <div class="topic-grid">
+        {% for topic in site.data.topics %}
+        {% assign topic_prefix = topic.slug | append: '/' %}
+        {% assign topic_count = 0 %}
+        {% for lesson in site.pages %}{% if lesson.path contains topic_prefix and lesson.name != 'index.md' %}{% assign topic_count = topic_count | plus: 1 %}{% endif %}{% endfor %}
+        <a class="topic-card" href="{{ topic_prefix | relative_url }}" data-group="{{ topic.group | escape }}" data-search="{{ topic.title | escape }} {{ topic.description | escape }} {{ topic.slug }}">
+            <div class="card-top"><span class="topic-icon"><svg aria-hidden="true"><use href="#icon-{{ topic.icon }}"></use></svg></span><span class="card-number">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span></div>
+            <span class="card-group">{{ topic.group }}</span><h3>{{ topic.title }}</h3><p>{{ topic.description }}</p>
+            <div class="card-bottom"><span>{{ topic_count }} lessons{% if topic.slug == 'learn-git' or topic.slug == 'learn-docker' or topic.slug == 'debugging' or topic.slug == 'system-design-basics' %}<span class="interactive-dot" title="Includes interactive practice"> · Interactive</span>{% endif %}</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+        </a>
+        {% endfor %}
+    </div>
+    <div id="topicEmpty" class="empty-state" hidden><h3>No topics found</h3><p>Try another search or clear the filters to explore the whole guide.</p><button type="button" id="resetTopics" class="button button-primary">Show all topics</button></div>
+</section>
+<section class="closing-note"><span aria-hidden="true">✳</span><p>You don’t have to know everything.<br><strong>Just know where to take the next step.</strong></p><a href="{{ '/development-workflow/' | relative_url }}">Build a better workflow ↗</a></section>

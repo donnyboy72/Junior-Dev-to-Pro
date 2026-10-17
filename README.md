@@ -50,6 +50,8 @@ All 24 topics have an overview and a learning path. Lessons introduce practical 
 - Each topic directory contains an `index.md` overview and individual Markdown lessons.
 - `_layouts/default.html` provides the shared layout and generates sidebar navigation from the pages.
 - `styles.css` contains the shared theme and responsive styles.
+- `_data/topics.json` defines topic labels, descriptions, icons, and curriculum groups for the homepage and navigation.
+- `assets/site.js` handles topic filtering, lesson search, mobile navigation, and the lesson contents list.
 - `_config.yml` sets the Jekyll site configuration and GitHub Pages base path.
 
 To add a lesson, include `layout: default` and a `title` in its YAML front matter, then link it from the module overview. Use the generated `.html` destination for new lesson links. Keep examples explicit about prerequisites and distinguish illustrative services from tools included in this repository.

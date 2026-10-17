@@ -3,123 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | jrDev - Junior to Pro</title>
-    <link rel="stylesheet" href="{{ site.baseurl }}/styles.css">
+    <meta name="description" content="{{ page.description | default: site.description | escape }}">
+    <meta name="theme-color" content="#152a2d">
+    <title>{{ page.title | escape }} | jrDev</title>
+    <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}">
+    <script src="{{ '/assets/site.js' | relative_url }}" defer></script>
 </head>
-<body>
+<body class="{% if page.home %}home-page{% else %}lesson-page{% endif %}">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></symbol>
+        <symbol id="icon-git" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M6 7v10m12-10c0 7-12 3-12 10"/></symbol>
+        <symbol id="icon-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+        <symbol id="icon-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5M14 4l-4 16"/></symbol>
+        <symbol id="icon-pen" viewBox="0 0 24 24"><path d="m15 4 5 5M4 20l5-1L21 7l-4-4L5 15z"/></symbol>
+        <symbol id="icon-bug" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="13" rx="5"/><path d="m9 7-2-4m8 4 2-4M3 10h4m10 0h4M3 16h4m10 0h4m-9-9v13"/></symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="m7 12 3 3 7-7"/></symbol>
+        <symbol id="icon-box" viewBox="0 0 24 24"><path d="m12 3 9 5v9l-9 5-9-5V8zm0 10 9-5M3 8l9 5v9M7 5.7l9 5"/></symbol>
+        <symbol id="icon-arrows" viewBox="0 0 24 24"><path d="M3 7h17m-4-4 4 4-4 4M21 17H4m4-4-4 4 4 4"/></symbol>
+        <symbol id="icon-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></symbol>
+        <symbol id="icon-tool" viewBox="0 0 24 24"><path d="M14 4a6 6 0 0 0-7 8L3 17a3 3 0 0 0 4 4l5-5a6 6 0 0 0 8-7l-4 3-4-4z"/></symbol>
+        <symbol id="icon-layers" viewBox="0 0 24 24"><path d="m12 3 10 5-10 5L2 8zm-10 9 10 5 10-5M2 16l10 5 10-5"/></symbol>
+        <symbol id="icon-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></symbol>
+        <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <symbol id="icon-pulse" viewBox="0 0 24 24"><path d="M2 12h5l3-8 4 16 3-8h5"/></symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zm-4 9 3 3 5-6"/></symbol>
+        <symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 5C8 2 3 4 3 4v15s5-2 9 1c4-3 9-1 9-1V4s-5-2-9 1zm0 0v15"/></symbol>
+        <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
+        <symbol id="icon-bulb" viewBox="0 0 24 24"><path d="M9 18h6m-5 3h4M8 15a7 7 0 1 1 8 0l-1 3H9z"/></symbol>
+        <symbol id="icon-message" viewBox="0 0 24 24"><path d="M4 4h16v13H9l-5 4zm4 5h8m-8 4h5"/></symbol>
+    </svg>
+    {% assign page_dir = page.path | split: '/' | first %}
+    {% assign current_topic = site.data.topics | where: 'slug', page_dir | first %}
     <div class="layout-wrapper">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <a href="{{ site.baseurl }}/" style="text-decoration: none;"><h1>jrDev</h1></a>
-            </div>
-            
-            <nav class="sidebar-nav">
-                {% assign all_pages = site.pages | sort: "path" %}
-                {% assign last_dir = "" %}
-                
-                {% for p in all_pages %}
-                    {% assign path_parts = p.path | split: "/" %}
-                    {% if path_parts.size > 1 %}
-                        {% assign current_dir = path_parts[0] %}
-                        
-                        {% comment %} Skip system directories {% endcomment %}
-                        {% if current_dir == "assets" or current_dir == "css" or current_dir == "js" or current_dir == "_layouts" %}{% continue %}{% endif %}
-                        
-                        {% if current_dir != last_dir %}
-                            {% if last_dir != "" %}
-                                </ul>
-                            </div>
+        <aside class="course-sidebar" id="courseSidebar" aria-label="Course navigation">
+            <a class="brand" href="{{ '/' | relative_url }}" aria-label="jrDev home"><span class="brand-mark" aria-hidden="true">j<span>r</span></span><span>jrDev<span class="brand-caption">A DEVELOPER FIELD GUIDE</span></span></a>
+            <label class="nav-search"><svg aria-hidden="true"><use href="#icon-search"></use></svg><input id="navSearch" type="search" placeholder="Find a lesson…" aria-label="Search navigation"></label>
+            <a class="overview-link {% if page.home %}current{% endif %}" href="{{ '/' | relative_url }}" {% if page.home %}aria-current="page"{% endif %}><svg aria-hidden="true"><use href="#icon-grid"></use></svg>Explore the guide <span aria-hidden="true">↗</span></a>
+            <p class="nav-label">THE CURRICULUM <span>24 TOPICS</span></p>
+            <nav class="course-nav" aria-label="Topics and lessons">
+                {% assign topic_groups = 'Foundation|Build & ship|Systems|Teamwork' | split: '|' %}
+                {% assign all_pages = site.pages | sort: 'path' %}
+                {% for group in topic_groups %}
+                <div class="nav-group"><p class="nav-group-label">{{ group }}</p>
+                    {% assign grouped_topics = site.data.topics | where: 'group', group %}
+                    {% for topic in grouped_topics %}
+                    {% assign topic_prefix = topic.slug | append: '/' %}
+                    <details class="nav-topic" {% if current_topic.slug == topic.slug %}open{% endif %}>
+                        <summary><svg aria-hidden="true"><use href="#icon-{{ topic.icon }}"></use></svg><span>{{ topic.title }}</span><span class="nav-chevron" aria-hidden="true">›</span></summary>
+                        <ul>
+                            <li><a href="{{ topic_prefix | relative_url }}" {% if current_topic.slug == topic.slug and page.name == 'index.md' %}aria-current="page"{% endif %}>Overview & learning path</a></li>
+                            {% for lesson in all_pages %}
+                            {% if lesson.path contains topic_prefix and lesson.name != 'index.md' %}
+                            <li><a href="{{ lesson.url | relative_url }}" {% if page.url == lesson.url %}aria-current="page"{% endif %}>{{ lesson.title | escape }}</a></li>
                             {% endif %}
-                            
-                            <div class="sidebar-section">
-                                <button class="sidebar-section-header">
-                                    {{ current_dir | replace: "-", " " | capitalize }}
-                                    <span class="chevron"></span>
-                                </button>
-                                <ul class="sidebar-section-links">
-                            {% assign last_dir = current_dir %}
-                        {% endif %}
-                        
-                        {% if p.name != "index.md" and p.path contains ".md" %}
-                            <li class="{% if page.url == p.url %}active{% endif %}">
-                                <a href="{{ site.baseurl }}{{ p.url }}">{{ p.title | default: p.name | replace: ".md", "" | replace: "-", " " | capitalize }}</a>
-                            </li>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-                
-                {% if last_dir != "" %}
-                    </ul>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                    {% endfor %}
                 </div>
-                {% endif %}
+                {% endfor %}
+                <p class="nav-empty" id="navEmpty" role="status" hidden>No matching lessons.</p>
             </nav>
+            <div class="sidebar-bottom"><span class="status-dot"></span> Small steps. Real skills.<a href="https://github.com/donnyboy72/Junior-Dev-to-Pro" aria-label="View jrDev on GitHub">↗</a></div>
         </aside>
-
-        <!-- Main Content Area -->
+        <button class="nav-backdrop" id="navBackdrop" aria-label="Close navigation" hidden></button>
         <div class="main-container">
-            <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-
-            <header class="content-header">
-                <a href="{{ site.baseurl }}/" class="logo-mobile"><h1>jrDev</h1></a>
-                <p class="site-tagline">Master the real-world skills every junior developer needs.</p>
+            <header class="topbar">
+                <div class="topbar-left"><button class="menu-toggle" id="menuToggle" type="button" aria-controls="courseSidebar" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button><a href="{{ '/' | relative_url }}" class="topbar-brand">jrDev</a><span class="topbar-label">{% if current_topic %}{{ current_topic.group }} <span aria-hidden="true">/</span> {{ current_topic.title }}{% else %}Your next step starts here{% endif %}</span></div>
+                <a class="github-link" href="https://github.com/donnyboy72/Junior-Dev-to-Pro">View on GitHub <span aria-hidden="true">↗</span></a>
             </header>
-
-            <main class="content-body">
-                {% if page.title and page.url != "/" %}
-                    <header class="page-title">
-                        <h1>{{ page.title }}</h1>
-                    </header>
+            <main id="main-content" class="content-body" tabindex="-1">
+                {% if page.home %}
+                    {{ content }}
+                {% else %}
+                    <div class="lesson-breadcrumb"><a href="{{ '/' | relative_url }}">Field guide</a>{% if current_topic %}<span aria-hidden="true">/</span><a href="{{ current_topic.slug | append: '/' | relative_url }}">{{ current_topic.title }}</a>{% endif %}</div>
+                    <header class="lesson-heading"><p class="eyebrow">{% if page.name == 'index.md' %}THE LEARNING PATH{% else %}ONE CONCEPT AT A TIME{% endif %}</p><h1>{{ page.title | escape }}</h1><p class="reading-meta" id="readingMeta"></p></header>
+                    <div class="lesson-layout"><article class="lesson-content" id="lessonContent">{{ content }}</article><aside class="lesson-toc" id="lessonToc" aria-label="On this page" hidden><p class="eyebrow">ON THIS PAGE</p><nav id="tocLinks"></nav><a class="back-to-top" href="#main-content">Back to top ↑</a></aside></div>
                 {% endif %}
-                
-                {{ content }}
             </main>
-
-            <footer>
-                <p>&copy; 2025 jrDev. All rights reserved.</p>
-            </footer>
+            <footer class="site-footer"><a class="footer-brand" href="{{ '/' | relative_url }}">jrDev<span>Built for the next step.</span></a><span>A free, open-source field guide.</span><a href="https://github.com/donnyboy72/Junior-Dev-to-Pro">Make it better ↗</a></footer>
         </div>
     </div>
-
-    <script>
-        // Collapsible sidebar sections
-        document.querySelectorAll('.sidebar-section-header').forEach(button => {
-            button.addEventListener('click', () => {
-                const section = button.parentElement;
-                section.classList.toggle('expanded');
-            });
-        });
-
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            sidebar.classList.toggle('open');
-            menuToggle.classList.toggle('active');
-        });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 1024 && sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== menuToggle) {
-                sidebar.classList.remove('open');
-                menuToggle.classList.remove('active');
-            }
-        });
-
-        // Expand section if current page is inside it
-        window.addEventListener('DOMContentLoaded', () => {
-            const activeLink = document.querySelector('.sidebar-section-links li.active');
-            if (activeLink) {
-                const section = activeLink.closest('.sidebar-section');
-                if (section) section.classList.add('expanded');
-            }
-        });
-    </script>
 </body>
 </html>
